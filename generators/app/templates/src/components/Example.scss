@@ -1,0 +1,65 @@
+.Example {
+  width: 400px;
+  margin: 50px auto;
+  padding: 50px;
+  background-color: #78AEBD;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.Example__loading {
+  display: inline-block;
+  vertical-align: middle;
+  width: 40px;
+}
+
+.Example__count {
+  border: 2px solid #484542;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 32px;
+  text-align: center;
+}
+
+.Example__button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 10px;
+  cursor: pointer;
+  background-color: #494542;
+  transition: opacity 500ms;
+  color: white;
+  outline: 0;
+  position: relative;
+
+  &:hover {
+    opacity: .5;
+  }
+
+  &:active {
+    opacity: .2;
+  }
+
+  &--setting {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 40px;
+      height: 40px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-image: url(/images/loading2.gif);
+    }
+  }
+
+  &--plus {
+
+  }
+
+  &--minus {
+
+  }
+}

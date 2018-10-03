@@ -1,0 +1,15 @@
+@import 'colors.scss';
+
+@mixin font-style($type) {
+  @if $type == 'h1' { font-size: 32px; font-weight: 600; }
+  @if $type == 'h2' { font-size: 28px; font-weight: 600; }
+  @if $type == 'dialog-title' { font-size: 22px; font-weight: 600; }
+  @if $type == 'body-title' { font-size: 18px; font-weight: 500; }
+  @if $type == 'body-medium' { font-size: 14px; font-weight: 500; }
+  @if $type == 'body-regular' { font-size: 14px; font-weight: 400; }
+  @if $type == 'link-large' { font-size: 16px; font-weight: 600; }
+  @if $type == 'link-medium' { font-size: 14px; font-weight: 600; }
+  @if $type == 'link-small' { font-size: 11px; font-weight: 600; }
+  @if $type == 'caption-em' { font-size: 12px; font-weight: 600; }
+  @if $type == 'caption' { font-size: 11px; font-weight: 500; }
+}

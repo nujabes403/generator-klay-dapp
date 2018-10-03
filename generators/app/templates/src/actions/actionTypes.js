@@ -1,0 +1,3 @@
+export const INTEGRATE_WALLET = 'INTEGRATE_WALLET'
+export const LOAD_WALLET = 'LOAD_WALLET'
+export const REMOVE_WALLET = 'REMOVE_WALLET'

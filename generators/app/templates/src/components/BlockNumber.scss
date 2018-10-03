@@ -1,0 +1,24 @@
+.BlockNumber {
+  position: fixed;
+  min-width: 240px;
+  height: 40px;
+  text-align: center;
+  top: 0;
+  right: 0;
+  color: black;
+  background-color: rgba(white, .9);
+  opacity: .65;
+  padding: 0 6px;
+}
+
+.BlockNumber__current {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.BlockNumber__icon {
+  display: inline-block;
+  width: 32px;
+  height: auto;
+  vertical-align: middle;
+}
