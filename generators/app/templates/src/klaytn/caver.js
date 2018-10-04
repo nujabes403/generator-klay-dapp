@@ -4,4 +4,6 @@ export const config = {
   rpcURL: 'http://localhost:8551'
 }
 
-export const cav = new Caver(new Caver.providers.HttpProvider(config.rpcURL))
+export const cav = new Caver(config.rpcURL)
+
+export default cav

@@ -51,7 +51,7 @@ class Example extends Component<Props> {
     // ex:) this.exampleContract.methods.plus().send({
     //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
     //   gas: '200000',
-    //   chainId: '1000', // You should specify `chainId` to '1000'.
+    //   chainId: '1000', // default `chainId` is '1000'.
     // })
 
     // It returns event emitter, so after sending, you can listen on event.
@@ -65,7 +65,6 @@ class Example extends Component<Props> {
     this.exampleContract.methods[direction]().send({
       from: walletInstance.address,
       gas: '200000',
-      chainId: '2018',
     })
       .once('transactionHash', console.log)
       .once('receipt', () => {
@@ -87,13 +86,11 @@ class Example extends Component<Props> {
     const { count, settingDirection } = this.state
     return (
       <div className="Example">
-        <div className="Example__count">
-          COUNT: {count}
-        </div>
+        <div className="Example__count">COUNT: {count}</div>
         <button
           onClick={this.setCount('plus')}
           className={cx('Example__button', 'Example__button--plus', {
-            'Example__button--setting': settingDirection == 'plus',
+            'Example__button--setting': settingDirection === 'plus',
           })}
         >
           +
@@ -101,7 +98,7 @@ class Example extends Component<Props> {
         <button
           onClick={this.setCount('minus')}
           className={cx('Example__button', 'Example__button--minus', {
-            'Example__button--setting': settingDirection == 'minus',
+            'Example__button--setting': settingDirection === 'minus',
           })}
         >
           -
