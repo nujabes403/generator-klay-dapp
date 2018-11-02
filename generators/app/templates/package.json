@@ -27,6 +27,7 @@
     "bignumber.js": "^7.2.1",
     "caver-js": "0.0.1-b",
     "classnames": "^2.2.5",
+    "connect-privkey-to-provider": "0.0.1",
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
     "react": "^16.3.2",
