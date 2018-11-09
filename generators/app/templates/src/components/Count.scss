@@ -1,4 +1,4 @@
-.Example {
+.Count {
   width: 400px;
   margin: 50px auto;
   padding: 50px;
@@ -7,13 +7,13 @@
   text-align: center;
 }
 
-.Example__loading {
+.Count__loading {
   display: inline-block;
   vertical-align: middle;
   width: 40px;
 }
 
-.Example__count {
+.Count__count {
   border: 2px solid #484542;
   border-radius: 4px;
   padding: 10px;
@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-.Example__button {
+.Count__button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
