@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 
 import { cav } from 'klaytn/caver'
-import { getWallet } from 'utils/wallet'
 
 import './Count.scss'
 
@@ -42,7 +41,7 @@ class Count extends Component<Props> {
   }
 
   setCount = (direction) => () => {
-    const walletInstance = getWallet()
+    const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
 
     // Need to integrate wallet for calling contract method.
     if (!walletInstance) return

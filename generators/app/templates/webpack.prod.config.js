@@ -18,8 +18,6 @@ const ENV_DIR = './config/'
 let envPath
 switch (process.env.ENV) {
   case 'LOCAL':
-  case 'DEV':
-  case 'QA':
   case 'REAL':
     envPath = ENV_DIR + `${process.env.ENV}`.toLowerCase() + '.env'
     break
@@ -82,10 +80,7 @@ module.exports = {
       utils: path.resolve(__dirname, 'src/utils/'),
       contracts: path.resolve(__dirname, 'contracts'),
       klaytn: path.resolve(__dirname, 'src/klaytn/'),
-      reducers: path.resolve(__dirname, 'src/reducers/'),
-      actions: path.resolve(__dirname, 'src/actions'),
       images: path.resolve(__dirname, 'static/images/'),
-      pages: path.resolve(__dirname, 'src/pages/'),
     },
   },
   optimization: {
@@ -105,9 +100,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'DEV': false,
-      'DEPLOYED_ADDRESS': JSON.stringify(fs.readFileSync('deployedAddress', 'utf8').replace(/\n|\r/g, "")),
-      'METAMASK': process.env.METAMASK,
+      DEPLOYED_ADDRESS: JSON.stringify(fs.readFileSync('deployedAddress', 'utf8').replace(/\n|\r/g, "")),
       DEPLOYED_ABI: fs.existsSync('deployedABI') && fs.readFileSync('deployedABI', 'utf8'),
     }),
     new CompressionPlugin(),

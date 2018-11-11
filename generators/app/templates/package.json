@@ -24,7 +24,6 @@
   "author": "nujabes403",
   "license": "GPL-3.0",
   "dependencies": {
-    "bignumber.js": "^7.2.1",
     "caver-js": "0.0.1-f",
     "classnames": "^2.2.5",
     "connect-privkey-to-provider": "0.0.1",
@@ -32,12 +31,7 @@
     "dotenv-webpack": "^1.5.7",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-redux": "^5.0.7",
-    "react-router": "^3.2.1",
-    "react-router-redux": "^4.0.8",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0",
-    "truffle-privatekey-provider": "^0.1.0"
+    "react-router": "^3.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
