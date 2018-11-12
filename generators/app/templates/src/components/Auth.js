@@ -3,10 +3,6 @@ import cx from 'classnames'
 
 import { cav } from 'klaytn/caver'
 
-type Props = {
-
-}
-
 import './Auth.scss'
 
 /**
@@ -15,7 +11,7 @@ import './Auth.scss'
  * 1) By keystore(json file) + password
  * 2) By privatekey
  */
-class Auth extends Component<Props> {
+class Auth extends Component {
   constructor() {
     super()
     this.state = {

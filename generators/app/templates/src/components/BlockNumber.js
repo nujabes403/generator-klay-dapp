@@ -11,7 +11,7 @@ import './BlockNumber.scss'
  * cf) If you want to connect to specific klaytn node,
  * change 'rpcURL' config in klaytn/caver.js
  */
-class BlockNumber extends Component<Props> {
+class BlockNumber extends Component {
   /**
    * BlockNumber component has a 'currentBlockNumber' state.
    */

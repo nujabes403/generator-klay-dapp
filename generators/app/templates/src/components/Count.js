@@ -5,7 +5,7 @@ import { cav } from 'klaytn/caver'
 
 import './Count.scss'
 
-class Count extends Component<Props> {
+class Count extends Component {
   constructor() {
     super()
     // ** 1. Create contract instance **
