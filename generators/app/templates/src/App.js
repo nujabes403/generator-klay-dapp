@@ -8,12 +8,19 @@ import './App.scss'
 
 class App extends Component<Props> {
   componentWillMount() {
+    /**
+     * sessionStorage is internet browser's feature which stores data
+     * until the browser tab is closed.
+     */
     const walletFromSession = sessionStorage.getItem('walletInstance')
 
+    // If 'walletInstance' value exists, add it to caver's wallet
     if (walletFromSession) {
       try {
         cav.klay.accounts.wallet.add(JSON.parse(walletFromSession))
       } catch (e) {
+        // If value in sessionStorage is invalid wallet instance,
+        // remove it from sessionStorage.
         sessionStorage.removeItem('walletInstance')
       }
     }

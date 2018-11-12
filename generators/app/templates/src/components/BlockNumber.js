@@ -52,17 +52,13 @@ class BlockNumber extends Component<Props> {
 
   /**
    * In 'render' lifecycle, show 'currentBlockNumber' state like below:
-   * <span>Block No. {currentBlockNumber}</span>
+   * <p>Block No. {currentBlockNumber}</p>
    */
   render() {
     const { currentBlockNumber } = this.state
     return (
       <div className="BlockNumber">
-      <img
-        className="BlockNumber__icon"
-        src={`/images/block-${((currentBlockNumber % 5) + 1) || 1}.svg`}
-      />
-      <span className="BlockNumber__current">Block No. {currentBlockNumber}</span>
+        <p className="BlockNumber__current">Block No. {currentBlockNumber}</p>
       </div>
     )
   }
