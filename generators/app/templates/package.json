@@ -8,12 +8,8 @@
   },
   "scripts": {
     "build:local": "ENV=LOCAL webpack --config webpack.prod.config.js",
-    "build:dev": "ENV=DEV webpack --config webpack.prod.config.js",
-    "build:qa": "ENV=QA webpack --config webpack.prod.config.js",
     "build:real": "ENV=REAL webpack --config webpack.prod.config.js",
     "local": "ENV=LOCAL node ./frontserver.js webpack.config.js --watch",
-    "dev": "ENV=DEV node ./frontserver.js webpack.config.js --watch",
-    "qa": "ENV=QA node ./frontserver.js webpack.prod.config.js --watch",
     "real": "ENV=REAL node ./frontserver.js webpack.prod.config.js --watch",
     "start": "ENV=REAL node ./frontserver.js webpack.prod.config.js --watch",
     "start:local": "ENV=LOCAL node ./frontserver.js webpack.prod.config.js --watch"

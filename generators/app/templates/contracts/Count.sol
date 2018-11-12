@@ -17,12 +17,8 @@ pragma solidity ^0.4.23;
  */
 
 contract Count {
-  uint public count;
+  uint public count = 0;
   address public lastParticipant;
-
-  constructor() public {
-    count = 0;
-  }
 
   function plus() public {
     count++;

@@ -4,8 +4,10 @@
  * There are two method for deploying contract to klaytn.
  *
  * 1. DEPLOY METHOD 1: By private key
+ *
  * ** WARNING **
  * You shouldn't expose your private key. Otherwise, your account would be hacked.
+ *
  * If you deploy your contract through private key, `provider` option is needed.
  * 1) set your private key to 1st argument on `new PrivateKeyConnector()` function.
  * 2) set your node's URL to 2nd argument on `new PrivateKeyConnector()` function.
