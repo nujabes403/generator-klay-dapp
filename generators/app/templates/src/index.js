@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
 
 import App from './App'
@@ -13,6 +12,7 @@ ReactDOM.render(
 )
 
 // hot module replacement.
+// : If file changed, re-render root component(App.js).
 if (module.hot) {
   module.hot.accept('./App.js', () => {
     const NextApp = require('./App').default
