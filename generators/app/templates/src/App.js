@@ -6,7 +6,7 @@ import Auth from 'components/Auth'
 
 import './App.scss'
 
-class App extends Component<Props> {
+class App extends Component {
   componentWillMount() {
     /**
      * sessionStorage is internet browser's feature which stores data

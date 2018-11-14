@@ -5,8 +5,8 @@ import Count from 'components/Count'
 
 const renderRoutes = rootComponent => (
   <Router history={browserHistory}>
-    <Route path="/" component={rootComponent}>
-      <IndexRoute component={Count} />
+    <Route component={rootComponent}>
+      <Route path="/" component={Count} />
     </Route>
   </Router>
 )
