@@ -614,12 +614,157 @@ getCount = async () => {
 Since we have contract instance, we can call contract method now. out contract instnace has property, `methods`.  
 It contains functions declared on deployed address, for example, `count`, `lastParticipant`, `plus`, `minus`.  
 
+In above code, `getCount` function is declared as `async` function. Since contract function call returns promise value, it is useful to declare function as `async`.
+We can fetch `count` storage variable's value by calling `this.countContract.mehotds.count().call()`.  
+We can fetch also `lastParticipant` storage variable's value by calling `this.countContract.mehotds.lastParticipant().call()`.  
+After fetching those variable's value, set state properties `count`, `lastParticipant` to responsed value from contract function call.  
+
+For further information about calling contract methods, visit klaytn docs site https://docs.klaytn.com/api/toolkit.html#methods
+
+```js
+componentDidMount() {
+  this.intervalId = setInterval(this.getCount, 1000)
+}
+
+componentWillUnmount() {
+  clearInterval(this.intervalId)
+}
+```
+
+We want to fetch `count` variable per 1 second, it could be achieved by `setInterval` and `clearInterval`.  
+It is similar pattern to `BlockNumber.js`'s `getBlockNumber` function which calls `caver.klay.getBlockNumber()` intervally.
+
+```js
+setCount = (direction) => () => {
+  const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
+
+  // Need to integrate wallet for calling contract method.
+  if (!walletInstance) return
+
+  this.setState({ settingDirection: direction })
+  // 3. ** Call contract method (SEND) **
+  // ex:) this.countContract.methods.methodName(arguments).send(txObject)
+  // You can call contract method (SEND) like above.
+  // For example, your contract has a method called `plus`.
+  // You can call it like below:
+  // ex:) this.countContract.methods.plus().send({
+  //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
+  //   gas: '200000',
+  //   chainId: '1000', // default `chainId` is '1000'.
+  // })
+
+  // It returns event emitter, so after sending, you can listen on event.
+  // Use .on('transactionHash') event,
+  // : if you want to handle logic after sending transaction.
+  // Use .once('receipt') event,
+  // : if you want to handle logic after your transaction is put into block.
+  // ex:) .once('receipt', (data) => {
+  //   console.log(data)
+  // })
+  this.countContract.methods[direction]().send({
+    from: walletInstance.address,
+    gas: '200000',
+  })
+    .once('transactionHash', console.log)
+    .once('receipt', () => {
+      this.setState({ settingDirection: null })
+    })
+    .once('error', (error) => {
+      alert(error.message)
+      this.setState({ settingDirection: null })
+    })
+}
+```
+
+`setCount`....
 
 `src/klaytn/caver.js`:  
+
+```js
+/**
+ * caver-js library make a connection with klaytn node.
+ * You could connect to specific klaytn node by changing 'rpcURL' value.
+ * If you are running a klaytn full node, set rpcURL to your node's URL.
+ * ex) rpcURL: 'http://localhost:8551'
+ * default rpcURL is 'http://aspen.klaytn.com'.
+ */
+import Caver from 'caver-js'
+
+export const config = {
+  rpcURL: 'http://aspen.klaytn.com'
+}
+
+export const cav = new Caver(config.rpcURL)
+
+export default cav
+```
+
+caver-js library make a connection with klaytn node. You could connect to specific klaytn node by changing 'rpcURL' value.  
+If you are running a klaytn full node, you can set rpcURL to your node's URL. for example, `rpcURL: 'http://localhost:8551'`  
+If not, default rpcURL is `'http://aspen.klaytn.com'`.
+
 
 ## G. Deploy your smart contract code
 1) truffle configuration  
 `truffle.js`:  
+
+`truffle.js`
+
+1. DEPLOY METHOD 1: By private key
+You shouldn't expose your private key. Otherwise, your account would be hacked.
+If you deploy your contract through private key, `provider` option is needed.
+1) set your private key to 1st argument on `new PrivateKeyConnector()` function.
+2) set your node's URL to 2nd argument on `new PrivateKeyConnector()` function.
+example)
+{
+ ...,
+ provider: new PrivateKeyConnector(
+   '0x48f5a77dbf13b436ae0325ae91efd084430d2da1123a8c273d7df5009248f90c',
+   `http://aspen.klaytn.com`,
+  ),
+ ...
+}
+If you deploy your contract with private key connector,
+You don't need to set `host`, `port`, `from` option.
+2. DEPLOY METHOD 2: By unlocked account
+You must set `host`, `port`, `from` option
+to deploy your contract with unlocked account.
+example)
+{
+ ...,
+ host: 'localhost',
+ port: 8551,
+ from: '0xd0122fc8df283027b6285cc889f5aa624eac1d23',
+ ...
+}
+If you deploy your contract with unlocked account on klaytn node,
+You don't need to set `provider` option.
+
+```
+const PrivateKeyConnector = require('connect-privkey-to-provider')
+
+const NETWORK_ID = '1000'
+const GASLIMIT = '20000000'
+
+const URL = `http://aspen.klaytn.com`
+const PRIVATE_KEY = '0x48f5a77dbf13b436ae0325ae91efd084430d2da1123a8c273d7df5009248f90c'
+
+module.exports = {
+  networks: {
+    /**
+     * DEPLOY METHOD 1: By private key.
+     * You shouldn't expose your private key. Otherwise, your account would be hacked!!
+     */
+    klaytn: {
+      provider: new PrivateKeyConnector(PRIVATE_KEY, URL),
+      network_id: NETWORK_ID,
+      gas: GASLIMIT,
+      gasPrice: null,
+    },
+  },
+}
+
+```
 
 2) Deploy setup (What contract do you want to deploy?)  
 `migrations/2_deploy_contracts.js`:  
