@@ -1,5 +1,7 @@
 ## D. Directory structure
 
+[directory structure](https://github.com/nujabes403/generator-klay-dapp/blob/master/directory-structure.png?raw=true)
+
 `contracts/`: Contains Solidity smart contract files.  (__What is your contract logic? make it here with .sol extension__)  
 `migrations/`: Contains procedural deploy(migrate) definition files. (__What contract exactly will you deploy? write down it here.__)  
 `truffle.js`: Truffle configuration file.  
