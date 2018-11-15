@@ -94,7 +94,7 @@ contract Count {
 ### 3) Setup functions
 We need two functions, `plus`, `minus`.  each functions's role is like below:  
 `plus` - increase `count` storage variable by 1. (count = count + 1)  
-`minus` - decrease `count` storage variable by 1. (count = count - 1)
+`minus` - decrease `count` storage variable by 1. (count = count - 1)  
 
 
 ```solidity
@@ -478,6 +478,9 @@ When our component will unmount, we don't need to call `this.getBlockNumber` fun
 
 `src/components/Auth.js`:  
 
+```js
+```
+
 `src/components/Count.js`:  
 ```js
 import React, { Component } from 'react'
@@ -793,6 +796,46 @@ this.countContract.methods.plus().send({
 ```
 So instead `.call()` we used before for calling `count` function, use `.send({ from: ..., gas: ... })`.
 
+```js
+.once('transactionHash', (txHash) => {
+  console.log(`
+    Sending a transaction... (Call contract's function 'plus')
+    txHash: ${txHash}
+    `
+  )
+})
+.once('receipt', (receipt) => {
+  console.log(`
+    Received receipt! It means your transaction calling plus function is in klaytn block(#${receipt.blockNumber})
+  `, receipt)
+  this.setState({ settingDirection: null })
+})
+.once('error', (error) => {
+  alert(error.message)
+  this.setState({ settingDirection: null })
+})
+```
+
+After sending transaction, you can hook into transaction life cycle. (`transactionHash`, `receipt`, `error`).  
+In `transactionHash` life cycle, you can get transaction hash before sending actual transaction.  
+In `receipt` life cycle, you can get transaction receipt. It means you transaction got into the block. you can check exact block number which your transaction goes into. by `receipt.blockNumber`.  
+In `error` life cycle is triggered when error occurred for sending a transaction.
+
+cf) `settingDirection` is used for showing loading indicator(gif), if transaction have been get into the block, you don't need to show loading indicator. So set `settingDirection` value to `null`.
+
+```js
+<button
+  onClick={this.setPlus}
+  className={cx('Count__button', {
+    'Count__button--setting': settingDirection === 'plus',
+  })}
+>
+  +
+</button>
+```
+
+You can call this function by clicking + button.  
+
 `src/klaytn/caver.js`:  
 
 ```js
@@ -956,10 +999,19 @@ module.exports = function (deployer) {
 }
 ```
 
+You can specify which contract code will you deploy in your `contracts/` directory.  
+At first, you should import your contract file (`Count.sol`) in this file through `const Count = artifats.require('./Count.sol')`  
+And use `deployer` to deploy your contract, through `deployer.deploy(Count)`. Actually, it is enough to deploy your contract.  
+However, if you want to add some logic after deploying your contract, use `.then()`.  
+We want to store deployed contracts' ABI and address.  `fs` node.js module make it possible to save it as a file. (`fs.writeFile(filename, content, callback)`)  
+Through this additional logic, we can save our deployed contract's address and ABI to our directory (`deployedABI` and `deployedAddress`).  
+
+For further information about `artifacts.`, try visit truffle document site, https://truffleframework.com/docs/truffle/getting-started/running-migrations#artifacts-require-
+
 3) Deploy  
 type `$ truffle deploy --network klaytn`.  
-It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.
-To recap, `truffle.js` configures `where to deploy, who will deploy, how much gas will you endure to deploy`. `migrations/2_deploy_contracts.js` configures `what contract to deploy`.
+It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.  
+To recap, `truffle.js` configures `where to deploy, who will deploy, how much gas will you endure to deploy`. `migrations/2_deploy_contracts.js` configures `what contract to deploy`.  
 `where?`: We will deploy our contract to the node `http://aspen.klaytn.com` or own full node `http://localhost:8551`.  
 `who?`: '0xd0122fc8df283027b6285cc889f5aa624eac1d23' account address will deploy this contract.  
 `gas?`: We can endure '20000000' gas limit for deploying our contract.  

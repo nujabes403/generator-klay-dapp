@@ -40,8 +40,6 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath('webpack.prod.config.js'), this.destinationPath('webpack.prod.config.js'))
     this.fs.copy(this.templatePath('frontserver.js'), this.destinationPath('frontserver.js'))
     this.fs.copy(this.templatePath('frontserver.local.js'), this.destinationPath('frontserver.local.js'))
-    this.fs.copy(this.templatePath('frontserver.qa.js'), this.destinationPath('frontserver.qa.js'))
-    this.fs.copy(this.templatePath('frontserver.dev.js'), this.destinationPath('frontserver.dev.js'))
     this.fs.copy(this.templatePath('frontserver.real.js'), this.destinationPath('frontserver.real.js'))
     this.fs.copy(this.templatePath('deployedAddress'), this.destinationPath('deployedAddress'))
     this.fs.copy(this.templatePath('deployedABI'), this.destinationPath('deployedABI'))
