@@ -1,4 +1,7 @@
 ## A. Introudction
+
+![intro](https://s3.ap-northeast-2.amazonaws.com/gx-static-images/1intro.gif)
+
 Basic smart contract bapp, “Count”
 
 ## B. Setting up the development environment
