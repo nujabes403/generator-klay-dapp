@@ -305,6 +305,55 @@ export default App
 
 ```
 
+`'App.js'` is root component of our tutorial app.
+
+
+```js
+render() {
+  return (
+    <div className="App">
+      <BlockNumber />
+      <Auth />
+      {this.props.children}
+    </div>
+  )
+}
+```
+
+It renders `BlockNumber`, `Auth` and `{this.props.children}` component.  
+`{this.props.children}` will be populated according to `routes.js` file.  
+If your browser's url path is `/`, it will render `<Count />` component.
+
+```js
+componentWillMount() {
+  /**
+   * sessionStorage is internet browser's feature which stores data
+   * until the browser tab is closed.
+   */
+  const walletFromSession = sessionStorage.getItem('walletInstance')
+
+  // If 'walletInstance' value exists, add it to caver's wallet
+  if (walletFromSession) {
+    try {
+      cav.klay.accounts.wallet.add(JSON.parse(walletFromSession))
+    } catch (e) {
+      // If value in sessionStorage is invalid wallet instance,
+      // remove it from sessionStorage.
+      sessionStorage.removeItem('walletInstance')
+    }
+  }
+}
+```
+
+There are `componentWillMount` life cycle on App component.  
+It checks there is a `walletInstance` session in browser's sessionStorage.  
+`walletInstance` session may not exist if you have never logged in our tutorial app.  
+Otherwise, `walletInstance` session may exist as JSON string, if so, try add wallet instance to caver.  
+You can add wallet instance to caver through `cav.klay.accounts.wallet.add(JSON.parse(walletFromSession))`.  
+For further information related `caver.klay.accounts`, visit klaytn docs site https://docs.klaytn.com/api/toolkit.html#walletadd  
+
+cf) `JSON.parse` is needed since `walletInstance` session is stored as JSON string.
+
 
 `src/components/BlockNumber.js`:  
 
@@ -644,7 +693,7 @@ constructor() {
 }
 ```
 
-`this.countContract = new cav.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS)` make a contract instance to interact interact with deployed `Count` contract, by providing `DEPLOYED_ABI` and `DEPLOYED_ADDRESS` to `cav.klay.Contract` API. and this contract instance is stored to `this.countContract`.  
+`this.countContract = new cav.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS)` make a contract instance to interact with deployed `Count` contract, by providing `DEPLOYED_ABI` and `DEPLOYED_ADDRESS` to `cav.klay.Contract` API. and this contract instance is stored to `this.countContract`.  
 
 ```js
 getCount = async () => {
@@ -845,22 +894,32 @@ Like above, if you deploy your contract with private key connector, You don't ne
 #### 2. DEPLOY METHOD 2: By unlocked account (difficult)
 To deploy contract by unlocked account, you should have your klaytn full node.  
 Access your klaytn node's console by typing `$ klay attach http://localhost:8551`
-If you don't have account in the node, generate it by typing `personal.newAccount()` on klaytn console. If you already have one, unlock your account through `personal.unlockAccount()`.  
+If you don't have account in the node, generate it by typing `personal.newAccount()` on klaytn console.  
+If you already have one, unlock your account through `personal.unlockAccount()`.  
 
-You must set `host`, `port`, `from` option to deploy your contract with unlocked account.  
+After ensuring account is unlocked,  
+you should set properties `host`, `port`, `network_id`, `from`.
+1) where to deploy(`host`, `port`, `network_id`)  
+2) who will deploy(`from`)
+3) How much gas will you endure to deploy your contract.(`gas`)
+
+Put your unlocked account address on `from`.
+If you're running your own klaytn full node, set the node's host to `host` and node's port to `port`.
+
 
 example)
 ```js
 {
- ...,
- host: 'localhost',
- port: 8551,
- from: '0xd0122fc8df283027b6285cc889f5aa624eac1d23',
- ...
+  host: 'localhost',
+  port: 8551,
+  from: '0xd0122fc8df283027b6285cc889f5aa624eac1d23',
+  network_id: NETWORK_ID,
+  gas: GASLIMIT,
+  gasPrice: null,
 }
 ```
 
-If you deploy your contract with unlocked account on klaytn node,
+Like above, if you deploy your contract with unlocked account on klaytn node,
 You don't need to set `provider` option.
 
 
@@ -898,7 +957,18 @@ module.exports = function (deployer) {
 ```
 
 3) Deploy  
-type  `$ truffle deploy --network klaytn`
+type `$ truffle deploy --network klaytn`.  
+It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.
+To recap, `truffle.js` configures `where to deploy, who will deploy, how much gas will you endure to deploy`. `migrations/2_deploy_contracts.js` configures `what contract to deploy`.
+`where?`: We will deploy our contract to the node `http://aspen.klaytn.com` or own full node `http://localhost:8551`.  
+`who?`: '0xd0122fc8df283027b6285cc889f5aa624eac1d23' account address will deploy this contract.  
+`gas?`: We can endure '20000000' gas limit for deploying our contract.  
+`what contract?`: We will deploy our Count contract.  
+
+[deploy screenshot.]
+
+You can check your contract deployed on your terminal if you succeed.  
+You can also check the deployed contract address where the contract is deployed.  
 
 ## H. Let's run our app
 Run our app in browser.  
