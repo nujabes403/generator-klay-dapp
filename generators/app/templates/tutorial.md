@@ -1,6 +1,6 @@
 ## A. Introudction
 
-![intro](https://s3.ap-northeast-2.amazonaws.com/gx-static-images/1intro.gif)
+![intro](https://github.com/nujabes403/generator-klay-dapp/blob/master/1intro.gif?raw=true)
 
 Basic smart contract bapp, “Count”
 
