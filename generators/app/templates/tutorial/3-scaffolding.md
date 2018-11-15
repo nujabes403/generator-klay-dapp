@@ -16,3 +16,5 @@ We'll use it to create a klaytn-based blockchain application.
 
 Now you can see files are populated to your folder, 'tutorial'.  
 Let's see what file is added in detail.
+
+[Next: Directory structure](4-directory-structure.md)

@@ -156,3 +156,5 @@ To recap, `truffle.js` configures `where to deploy, who will deploy, how much ga
 
 You can check your contract deployed on your terminal if you succeed.  
 You can also check the deployed contract address where the contract is deployed.  
+
+[Next: Run app](8-run-app.md)

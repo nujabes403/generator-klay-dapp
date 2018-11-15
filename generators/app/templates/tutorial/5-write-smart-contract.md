@@ -111,3 +111,5 @@ To get transaction sender's address we can use `msg.sender` variable.
 ```solidity
 lastParticipant = msg.sender;
 ```
+
+[Next: Frontend code overview](6-frontend-code.md)

@@ -6,3 +6,5 @@
 ### 2) Install truffle globally
 \- type `$ npm install -g truffle` in your terminal.
 \- If you want to check you already have installed truffle globally, type `$ truffle -v` in your terminal. If it shows truffle version, just skip it, you already have one.
+
+[Next: Scaffolding](3-scaffolding.md)
