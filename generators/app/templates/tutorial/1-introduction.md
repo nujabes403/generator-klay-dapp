@@ -7,6 +7,9 @@
 * [Directory structure](4-directory-structure.md)
 * [Write smart contract](5-write-smart-contract.md)
 * [Frontend code overview](6-frontend-code.md)
+  - [Frontend code detail: BlockNumber component](6-1-frontend-blocknumber-component.md)
+  - [Frontend code detail: Auth component](6-2-frontend-auth-component.md)
+  - [Frontend code detail: Count component](6-3-frontend-count-component.md)
 * [Deploy contract](7-deploy-contract.md)
 * [Run app](8-run-app.md)
 
