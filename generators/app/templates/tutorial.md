@@ -67,9 +67,7 @@ cf) caver-js is a RPC call library which makes a connection to klaytn node, inte
 We will make super simple contract called "Count" contract.  
 
 a. There would be just one storage variable called `count`.  
-b. User can increase `count` variable by 1 or decrease it by 1. So there would be two functions, `plus` function which increases `count` variable by 1, and `minus` function which decreases `count` variable by 1. That's all! For helping your understanding, let me show screenshot our tutorial app will be like.
-
-[tutorial app screenshot]
+b. User can increase `count` variable by 1 or decrease it by 1. So there would be two functions, `plus` function which increases `count` variable by 1, and `minus` function which decreases `count` variable by 1. That's all!
 
 ### 2) Setup variable
 Before setting variable, we should specify solidity version. Let's use 0.4.23 stable version.
@@ -1149,8 +1147,6 @@ To recap, `truffle.js` configures `where to deploy, who will deploy, how much ga
 `who?`: '0xd0122fc8df283027b6285cc889f5aa624eac1d23' account address will deploy this contract.  
 `gas?`: We can endure '20000000' gas limit for deploying our contract.  
 `what contract?`: We will deploy our Count contract.  
-
-[deploy screenshot.]
 
 You can check your contract deployed on your terminal if you succeed.  
 You can also check the deployed contract address where the contract is deployed.  
