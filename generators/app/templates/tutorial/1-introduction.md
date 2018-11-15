@@ -2,7 +2,7 @@
 
 ## Table of Contents
 * [Introduction](1-introduction.md)
-* [Environment setup](2-envorinment-setup.md)
+* [Environment setup](2-environment-setup.md)
 * [Scaffolding](3-scaffolding.md)
 * [Directory structure](4-directory-structure.md)
 * [Write smart contract](5-write-smart-contract.md)
@@ -18,4 +18,4 @@ This is introduction of our tutorial app.
 We will make app with basic smart contract(`Count`).  
 This app's features are simple: any user can plus or minus current value like above gif.  
 
-[Next: Environment setup](2-envorinment-setup.md)
+[Next: Environment setup](2-environment-setup.md)
