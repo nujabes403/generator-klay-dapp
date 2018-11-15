@@ -16,6 +16,8 @@ If it shows npm version, just skip it, you already have one.
 
 
 ## C. Scaffolding installation
+![install](https://github.com/nujabes403/generator-klay-dapp/blob/master/2install.gif?raw=true)
+
 ### 1) Install yeoman generator  
 yeoman generator is generic scaffolding system allowing the creation of any kind of app.  
 We'll use it to create a klaytn-based blockchain application.  
@@ -1139,6 +1141,7 @@ Through this additional logic, we can save our deployed contract's address and A
 For further information about `artifacts.`, try visit truffle document site, https://truffleframework.com/docs/truffle/getting-started/running-migrations#artifacts-require-
 
 3) Deploy  
+![deploy](https://github.com/nujabes403/generator-klay-dapp/blob/master/3deploy.gif?raw=true)
 type `$ truffle deploy --network klaytn`.  
 It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.  
 To recap, `truffle.js` configures `where to deploy, who will deploy, how much gas will you endure to deploy`. `migrations/2_deploy_contracts.js` configures `what contract to deploy`.  
