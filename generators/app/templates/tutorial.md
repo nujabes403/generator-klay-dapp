@@ -473,19 +473,61 @@ class Count extends Component {
     })
   }
 
-  setCount = (direction) => () => {
+  setPlus = () => {
     const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
 
     // Need to integrate wallet for calling contract method.
     if (!walletInstance) return
 
-    this.setState({ settingDirection: direction })
+    this.setState({ settingDirection: 'plus' })
+
     // 3. ** Call contract method (SEND) **
     // ex:) this.countContract.methods.methodName(arguments).send(txObject)
     // You can call contract method (SEND) like above.
     // For example, your contract has a method called `plus`.
     // You can call it like below:
     // ex:) this.countContract.methods.plus().send({
+    //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
+    //   gas: '200000',
+    //   chainId: '1000', // default `chainId` is '1000'.
+    // })
+    this.countContract.methods.plus().send({
+      from: walletInstance.address,
+      gas: '200000',
+    })
+      .once('transactionHash', (txHash) => {
+        console.log(`
+          Sending a transaction... (Call contract's function 'plus')
+          txHash: ${txHash}
+          `
+        )
+      })
+      .once('receipt', (receipt) => {
+        console.log(`
+          Received receipt! It means your transaction calling plus function is in klaytn block(#${receipt.blockNumber})
+        `, receipt)
+        this.setState({ settingDirection: null })
+      })
+      .once('error', (error) => {
+        alert(error.message)
+        this.setState({ settingDirection: null })
+      })
+  }
+
+  setMinus = () => {
+    const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
+
+    // Need to integrate wallet for calling contract method.
+    if (!walletInstance) return
+
+    this.setState({ settingDirection: 'minus' })
+
+    // 3. ** Call contract method (SEND) **
+    // ex:) this.countContract.methods.methodName(arguments).send(txObject)
+    // You can call contract method (SEND) like above.
+    // For example, your contract has a method called `minus`.
+    // You can call it like below:
+    // ex:) this.countContract.methods.minus().send({
     //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
     //   gas: '200000',
     //   chainId: '1000', // default `chainId` is '1000'.
@@ -499,12 +541,22 @@ class Count extends Component {
     // ex:) .once('receipt', (data) => {
     //   console.log(data)
     // })
-    this.countContract.methods[direction]().send({
+    this.countContract.methods.minus().send({
       from: walletInstance.address,
       gas: '200000',
     })
-      .once('transactionHash', console.log)
-      .once('receipt', () => {
+      .once('transactionHash', (txHash) => {
+        console.log(`
+          Sending a transaction... (Call contract's function 'minus')
+          txHash: ${txHash}
+          `
+        )
+      })
+      .once('receipt', (receipt) => {
+        console.log(`
+          Received receipt which means your transaction(calling minus function)
+          is in klaytn block(#${receipt.blockNumber})
+        `, receipt)
         this.setState({ settingDirection: null })
       })
       .once('error', (error) => {
@@ -532,16 +584,16 @@ class Count extends Component {
         )}
         <div className="Count__count">COUNT: {count}</div>
         <button
-          onClick={this.setCount('plus')}
-          className={cx('Count__button', 'Count__button--plus', {
+          onClick={this.setPlus}
+          className={cx('Count__button', {
             'Count__button--setting': settingDirection === 'plus',
           })}
         >
           +
         </button>
         <button
-          onClick={this.setCount('minus')}
-          className={cx('Count__button', 'Count__button--minus', {
+          onClick={this.setMinus}
+          className={cx('Count__button', {
             'Count__button--setting': settingDirection === 'minus',
           })}
         >
@@ -553,6 +605,7 @@ class Count extends Component {
 }
 
 export default Count
+
 ```
 
 `'Count'` component's role is interacting with Count contract deployed on klaytn blockchain.  
@@ -635,13 +688,14 @@ We want to fetch `count` variable per 1 second, it could be achieved by `setInte
 It is similar pattern to `BlockNumber.js`'s `getBlockNumber` function which calls `caver.klay.getBlockNumber()` intervally.
 
 ```js
-setCount = (direction) => () => {
+setPlus = () => {
   const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
 
   // Need to integrate wallet for calling contract method.
   if (!walletInstance) return
 
-  this.setState({ settingDirection: direction })
+  this.setState({ settingDirection: 'plus' })
+
   // 3. ** Call contract method (SEND) **
   // ex:) this.countContract.methods.methodName(arguments).send(txObject)
   // You can call contract method (SEND) like above.
@@ -652,21 +706,21 @@ setCount = (direction) => () => {
   //   gas: '200000',
   //   chainId: '1000', // default `chainId` is '1000'.
   // })
-
-  // It returns event emitter, so after sending, you can listen on event.
-  // Use .on('transactionHash') event,
-  // : if you want to handle logic after sending transaction.
-  // Use .once('receipt') event,
-  // : if you want to handle logic after your transaction is put into block.
-  // ex:) .once('receipt', (data) => {
-  //   console.log(data)
-  // })
-  this.countContract.methods[direction]().send({
+  this.countContract.methods.plus().send({
     from: walletInstance.address,
     gas: '200000',
   })
-    .once('transactionHash', console.log)
-    .once('receipt', () => {
+    .once('transactionHash', (txHash) => {
+      console.log(`
+        Sending a transaction... (Call contract's function 'plus')
+        txHash: ${txHash}
+        `
+      )
+    })
+    .once('receipt', (receipt) => {
+      console.log(`
+        Received receipt! It means your transaction calling plus function is in klaytn block(#${receipt.blockNumber})
+      `, receipt)
       this.setState({ settingDirection: null })
     })
     .once('error', (error) => {
@@ -676,7 +730,19 @@ setCount = (direction) => () => {
 }
 ```
 
-`setCount`....
+`'setPlus'` function is most important part in Count component. It interacts with contract by calling contract function `plus`. Since this function is also contract method, it is contained in `this.counterContract.methods`.  
+However, unlike `count` and `lastParticipant` function read data from klaytn blockchain, this `plus` function __writes data__ to klaytn blockchain.  
+Just reading data is free, however writing data has cost for computation & storage. This cost is called `'gas'`. This kind of process is called `'Sending a transaction'`.  
+You can easily think `'transaction'` as `writing data to blockchain.` and it costs `'gas'` for computation and storing data.  
+It is the reason why for sending a transaction `from:` property is needed to inform klaytn node who will send a transaction(who will pay for this transaction.) and `gas:` property for how much cost will you endure for sending a transaction.  
+
+```js
+this.countContract.methods.plus().send({
+  from: walletInstance.address,
+  gas: '200000',
+})
+```
+So instead `.call()` we used before for calling `count` function, use `.send({ from: ..., gas: ... })`.
 
 `src/klaytn/caver.js`:  
 
@@ -706,41 +772,38 @@ If not, default rpcURL is `'http://aspen.klaytn.com'`.
 
 ## G. Deploy your smart contract code
 1) truffle configuration  
-`truffle.js`:  
+`truffle.js`:
 
-`truffle.js`
+`truffle.js` file is the place you can describe "How to deploy your contract code". You can congifure below items through truffle.js
 
-1. DEPLOY METHOD 1: By private key
-You shouldn't expose your private key. Otherwise, your account would be hacked.
-If you deploy your contract through private key, `provider` option is needed.
-1) set your private key to 1st argument on `new PrivateKeyConnector()` function.
-2) set your node's URL to 2nd argument on `new PrivateKeyConnector()` function.
+__1) Who will deploy the contract?  
+2) Which network will you deploy on?  
+3) How many gas will you pay to deploy the contract?__
+
+There are 2 different methods to deploy your contract, first one uses `private key`, the other one uses `unlocked account`.
+
+#### DEPLOY METHOD 1: By private key
+*WARNING: You shouldn't expose your private key.
+Otherwise, your account would be hacked.*  
+
+If you want to deploy your contract through private key, `provider` option is needed.   
+
+1) set your private key to 1st argument on `new PrivateKeyConnector()` function.  
+2) set your klaytn node's URL to 2nd argument on `new PrivateKeyConnector()` function.
+
 example)
+```js
 {
  ...,
  provider: new PrivateKeyConnector(
-   '0x48f5a77dbf13b436ae0325ae91efd084430d2da1123a8c273d7df5009248f90c',
-   `http://aspen.klaytn.com`,
+   'YOUR PRIVATE KEY',
+   `http://aspen.klaytn.com`, // If you're running full node you can set your node's rpc url.
   ),
  ...
 }
-If you deploy your contract with private key connector,
-You don't need to set `host`, `port`, `from` option.
-2. DEPLOY METHOD 2: By unlocked account
-You must set `host`, `port`, `from` option
-to deploy your contract with unlocked account.
-example)
-{
- ...,
- host: 'localhost',
- port: 8551,
- from: '0xd0122fc8df283027b6285cc889f5aa624eac1d23',
- ...
-}
-If you deploy your contract with unlocked account on klaytn node,
-You don't need to set `provider` option.
-
 ```
+
+```js
 const PrivateKeyConnector = require('connect-privkey-to-provider')
 
 const NETWORK_ID = '1000'
@@ -766,9 +829,73 @@ module.exports = {
 
 ```
 
+See `networks` property above code. It has `klaytn` key which has 4 properties,
+`provider`, `network_id`, `gas`, `gasPrice`.
+
+`provider: new PrivateKeyConnector(PRIVATE_KEY, URL)` line informs truffle __Who will deploy the contract, and who will pay for the deploy fee? (PRIVATE_KEY)__  and __Which node will you deploy on (URL)?__
+
+`network_id: NETWORK_ID` line specify network id in klaytn, you should specify it `1000` in klaytn aspen network(testnet).  
+
+`gas: GASLIMIT` line informs truffle how much gas limit will you endure to deploy your contract.  
+
+`gasPrice: null` line informs truffle how much price will you pay per gas unit. Currently in klaytn, there is fixed gas price `'25000000000'`, you don't need to set this value to `gasPrice` property, if you set it as `null`, truffle will set fixed gas price automatically.  
+
+Like above, if you deploy your contract with private key connector, You don't need to set `host`, `port`, `from` option.
+
+#### 2. DEPLOY METHOD 2: By unlocked account (difficult)
+To deploy contract by unlocked account, you should have your klaytn full node.  
+Access your klaytn node's console by typing `$ klay attach http://localhost:8551`
+If you don't have account in the node, generate it by typing `personal.newAccount()` on klaytn console. If you already have one, unlock your account through `personal.unlockAccount()`.  
+
+You must set `host`, `port`, `from` option to deploy your contract with unlocked account.  
+
+example)
+```js
+{
+ ...,
+ host: 'localhost',
+ port: 8551,
+ from: '0xd0122fc8df283027b6285cc889f5aa624eac1d23',
+ ...
+}
+```
+
+If you deploy your contract with unlocked account on klaytn node,
+You don't need to set `provider` option.
+
+
 2) Deploy setup (What contract do you want to deploy?)  
 `migrations/2_deploy_contracts.js`:  
 
+```js
+const Count = artifacts.require('./Count.sol')
+const fs = require('fs')
+
+module.exports = function (deployer) {
+  deployer.deploy(Count)
+    .then(() => {
+    // Record recently deployed contract address to 'deployedAddress' file.
+    if (Count._json) {
+      // Save abi file to deployedABI.
+      fs.writeFile(
+        'deployedABI',
+        JSON.stringify(Count._json.abi, 2),
+        (err) => {
+          if (err) throw err
+          console.log(`The abi of ${Count._json.contractName} is recorded on deployedABI file`)
+        })
+    }
+
+    fs.writeFile(
+      'deployedAddress',
+      Count.address,
+      (err) => {
+        if (err) throw err
+        console.log(`The deployed contract address * ${Count.address} * is recorded on deployedAddress file`)
+    })
+  })
+}
+```
 
 3) Deploy  
 type  `$ truffle deploy --network klaytn`
@@ -776,7 +903,3 @@ type  `$ truffle deploy --network klaytn`
 ## H. Let's run our app
 Run our app in browser.  
 type `$ npm run local`
-
-## I. Let's expose your first bapp to your friends with AWS S3.
-Build our app with optimization.
-type `$npm run build`

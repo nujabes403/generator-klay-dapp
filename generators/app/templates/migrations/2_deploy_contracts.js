@@ -24,4 +24,4 @@ module.exports = function (deployer) {
         console.log(`The deployed contract address * ${Count.address} * is recorded on deployedAddress file`)
     })
   })
-};
+}

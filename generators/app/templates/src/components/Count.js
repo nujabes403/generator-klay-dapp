@@ -40,19 +40,62 @@ class Count extends Component {
     })
   }
 
-  setCount = (direction) => () => {
+  setPlus = () => {
     const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
 
     // Need to integrate wallet for calling contract method.
     if (!walletInstance) return
 
-    this.setState({ settingDirection: direction })
+    this.setState({ settingDirection: 'plus' })
+
     // 3. ** Call contract method (SEND) **
     // ex:) this.countContract.methods.methodName(arguments).send(txObject)
     // You can call contract method (SEND) like above.
     // For example, your contract has a method called `plus`.
     // You can call it like below:
     // ex:) this.countContract.methods.plus().send({
+    //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
+    //   gas: '200000',
+    //   chainId: '1000', // default `chainId` is '1000'.
+    // })
+    this.countContract.methods.plus().send({
+      from: walletInstance.address,
+      gas: '200000',
+    })
+      .once('transactionHash', (txHash) => {
+        console.log(`
+          Sending a transaction... (Call contract's function 'plus')
+          txHash: ${txHash}
+          `
+        )
+      })
+      .once('receipt', (receipt) => {
+        console.log(`
+          Received receipt! It means your transaction(calling plus function)
+          is in klaytn block(#${receipt.blockNumber})
+        `, receipt)
+        this.setState({ settingDirection: null })
+      })
+      .once('error', (error) => {
+        alert(error.message)
+        this.setState({ settingDirection: null })
+      })
+  }
+
+  setMinus = () => {
+    const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
+
+    // Need to integrate wallet for calling contract method.
+    if (!walletInstance) return
+
+    this.setState({ settingDirection: 'minus' })
+
+    // 3. ** Call contract method (SEND) **
+    // ex:) this.countContract.methods.methodName(arguments).send(txObject)
+    // You can call contract method (SEND) like above.
+    // For example, your contract has a method called `minus`.
+    // You can call it like below:
+    // ex:) this.countContract.methods.minus().send({
     //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
     //   gas: '200000',
     //   chainId: '1000', // default `chainId` is '1000'.
@@ -66,12 +109,22 @@ class Count extends Component {
     // ex:) .once('receipt', (data) => {
     //   console.log(data)
     // })
-    this.countContract.methods[direction]().send({
+    this.countContract.methods.minus().send({
       from: walletInstance.address,
       gas: '200000',
     })
-      .once('transactionHash', console.log)
-      .once('receipt', () => {
+      .once('transactionHash', (txHash) => {
+        console.log(`
+          Sending a transaction... (Call contract's function 'minus')
+          txHash: ${txHash}
+          `
+        )
+      })
+      .once('receipt', (receipt) => {
+        console.log(`
+          Received receipt which means your transaction(calling minus function)
+          is in klaytn block(#${receipt.blockNumber})
+        `, receipt)
         this.setState({ settingDirection: null })
       })
       .once('error', (error) => {
@@ -99,16 +152,16 @@ class Count extends Component {
         )}
         <div className="Count__count">COUNT: {count}</div>
         <button
-          onClick={this.setCount('plus')}
-          className={cx('Count__button', 'Count__button--plus', {
+          onClick={this.setPlus}
+          className={cx('Count__button', {
             'Count__button--setting': settingDirection === 'plus',
           })}
         >
           +
         </button>
         <button
-          onClick={this.setCount('minus')}
-          className={cx('Count__button', 'Count__button--minus', {
+          onClick={this.setMinus}
+          className={cx('Count__button', {
             'Count__button--setting': settingDirection === 'minus',
           })}
         >
