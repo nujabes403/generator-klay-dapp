@@ -161,6 +161,14 @@ example)
 ![deploy](https://github.com/nujabes403/generator-klay-dapp/blob/master/3deploy.gif?raw=true)  
 type `$ truffle deploy --network klaytn`.  
 It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.  
+
+cf) `--reset` option  
+After deploying your contract, if you just type `$ truffle deploy --network klaytn`,  Nothing will happen.  
+It's because truffle only deploy contract when there were change in contract, otherwise truffle will not do anything.  
+However, if you just want to deploy your contract anyway, there is an option `--reset`.  
+If you provide this option, truffle will deploy your contract even the content of contract hasn't changed.  
+ex) `$ truffle deploy --reset --network klaytn`
+
 To recap, `truffle.js` configures `where to deploy, who will deploy, how much gas will you endure to deploy`. `migrations/2_deploy_contracts.js` configures `what contract to deploy`.  
 `where?`: We will deploy our contract to the node `http://aspen.klaytn.com` or own full node `http://localhost:8551`.  
 `who?`: '0xd0122fc8df283027b6285cc889f5aa624eac1d23' account address will deploy this contract.  
