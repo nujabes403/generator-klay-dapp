@@ -145,7 +145,20 @@ Through this additional logic, we can save our deployed contract's address and A
 For further information about `artifacts.`, try visit truffle document site, https://truffleframework.com/docs/truffle/getting-started/running-migrations#artifacts-require-
 
 3) Deploy  
-![deploy](https://github.com/nujabes403/generator-klay-dapp/blob/master/3deploy.gif?raw=true)
+You need KLAY for deploying contract. There are 2 different methods to receive testnet KLAY.
+
+* a. Through klaytn wallet  
+https://wallet.klaytn.com/faucet  
+there is a faucet providing 1000 KLAY per 900 blocks in Klaytn Aspen testnet.  
+After creating your klaytn account, run faucet to receive 1000 KLAY.  
+
+* b. Through terminal curl  
+If you already have your klaytn account(address), type command below in terminal.  
+`$ curl -X GET "https://apiwallet.klaytn.com/faucet?address=YOUR_ADDRESS"`  
+example)  
+`$ curl -X GET "https://apiwallet.klaytn.com/faucet?address=0x32421b7Bfe2F81ca6708b72eDc5b2f1Ce9f80a79"`
+
+![deploy](https://github.com/nujabes403/generator-klay-dapp/blob/master/3deploy.gif?raw=true)  
 type `$ truffle deploy --network klaytn`.  
 It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.  
 To recap, `truffle.js` configures `where to deploy, who will deploy, how much gas will you endure to deploy`. `migrations/2_deploy_contracts.js` configures `what contract to deploy`.  
