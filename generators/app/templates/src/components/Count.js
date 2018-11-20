@@ -151,7 +151,7 @@ class Count extends Component {
     const { lastParticipant, count, settingDirection, txHash } = this.state
     return (
       <div className="Count">
-        {lastParticipant && (
+        {Number(lastParticipant) !== 0 && (
           <div className="Count__lastParticipant">
             last participant: {lastParticipant}
           </div>

@@ -84,9 +84,13 @@ class Count extends Component {
       })
       .once('receipt', (receipt) => {
         console.log(`
-          Received receipt! It means your transaction calling plus function is in klaytn block(#${receipt.blockNumber})
+          Received receipt! It means your transaction(calling plus function)
+          is in klaytn block(#${receipt.blockNumber})
         `, receipt)
-        this.setState({ settingDirection: null })
+        this.setState({
+          settingDirection: null,
+          txHash: receipt.transactionHash,
+        })
       })
       .once('error', (error) => {
         alert(error.message)
@@ -137,7 +141,10 @@ class Count extends Component {
           Received receipt which means your transaction(calling minus function)
           is in klaytn block(#${receipt.blockNumber})
         `, receipt)
-        this.setState({ settingDirection: null })
+        this.setState({
+          settingDirection: null,
+          txHash: receipt.transactionHash,
+        })
       })
       .once('error', (error) => {
         alert(error.message)
@@ -154,7 +161,7 @@ class Count extends Component {
   }
 
   render() {
-    const { lastParticipant, count, settingDirection } = this.state
+    const { lastParticipant, count, settingDirection, txHash } = this.state
     return (
       <div className="Count">
         {lastParticipant && (
@@ -179,13 +186,26 @@ class Count extends Component {
         >
           -
         </button>
+        {txHash && (
+          <div className="Count__lastTransaction">
+            <p className="Count__lastTransactionMessage">
+              You can check your last transaction in klaytn scope:
+            </p>
+            <a
+              target="_blank"
+              href={`https://scope.klaytn.com/transaction/${txHash}`}
+              className="Count__lastTransactionLink"
+            >
+              {txHash}
+            </a>
+          </div>
+        )}
       </div>
     )
   }
 }
 
 export default Count
-
 ```
 ### 2) `Count` component's role
 `'Count'` component's role is interacting with Count contract deployed on klaytn blockchain.  
@@ -413,5 +433,12 @@ this.countContract.methods.plus().send({
     this.setState({ settingDirection: null })
   })
 ```
+
+### How can I check my transaction put into the blockchain?
+
+
+After sending a transaction, you can check your transaction detail in klaytnscope.  
+Check it in `https://scope.klaytn.com/transaction/${txHash}`.
+
 
 [Next: Deploy contract](7-deploy-contract.md)
