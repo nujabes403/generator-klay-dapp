@@ -74,7 +74,10 @@ class Count extends Component {
           Received receipt! It means your transaction(calling plus function)
           is in klaytn block(#${receipt.blockNumber})
         `, receipt)
-        this.setState({ settingDirection: null })
+        this.setState({
+          settingDirection: null,
+          txHash: receipt.transactionHash,
+        })
       })
       .once('error', (error) => {
         alert(error.message)
@@ -125,7 +128,10 @@ class Count extends Component {
           Received receipt which means your transaction(calling minus function)
           is in klaytn block(#${receipt.blockNumber})
         `, receipt)
-        this.setState({ settingDirection: null })
+        this.setState({
+          settingDirection: null,
+          txHash: receipt.transactionHash,
+        })
       })
       .once('error', (error) => {
         alert(error.message)
@@ -142,7 +148,7 @@ class Count extends Component {
   }
 
   render() {
-    const { lastParticipant, count, settingDirection } = this.state
+    const { lastParticipant, count, settingDirection, txHash } = this.state
     return (
       <div className="Count">
         {lastParticipant && (
@@ -167,6 +173,20 @@ class Count extends Component {
         >
           -
         </button>
+        {txHash && (
+          <div className="Count__lastTransaction">
+            <p className="Count__lastTransactionMessage">
+              You can check your last transaction in klaytn scope:
+            </p>
+            <a
+              target="_blank"
+              href={`https://scope.klaytn.com/transaction/${txHash}`}
+              className="Count__lastTransactionLink"
+            >
+              {txHash}
+            </a>
+          </div>
+        )}
       </div>
     )
   }

@@ -1,7 +1,7 @@
 .Count {
   width: 400px;
   margin: 50px auto;
-  padding: 50px;
+  padding: 50px 20px;
   background-color: #78AEBD;
   border-radius: 6px;
   text-align: center;
@@ -54,4 +54,14 @@
       background-image: url(/images/loading.gif);
     }
   }
+}
+
+.Count__lastTransaction {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.Count__lastTransactionLink {
+  color: blue;
+  font-size: 10px;
 }
