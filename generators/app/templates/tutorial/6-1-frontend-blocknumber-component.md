@@ -1,5 +1,13 @@
 `src/components/BlockNumber.js`:  
 
+## `BlockNumber` component
+* 1) Full code
+* 2) BlockNumber component's role
+* 3) `getBlockNumber` method in detail
+* 4) Call `getBlockNumber` intervally
+
+
+### 1) Full code
 ```js
 import React, { Component } from 'react'
 
@@ -70,10 +78,11 @@ class BlockNumber extends Component {
 export default BlockNumber
 
 ```
-
+### 2) BlockNumber component's role
 `'BlockNumber'` component's role is showing klaytn's current block number.  
 It requests current block number to klaytn node by calling caver.js's API `caver.klay.getBlockNumber()` method per 1 second. When response having current block number comes from klaytn node, it re-renders DOM through `this.setState({ currentBlockNumber: blockNumber })`.  
 
+### 3) `getBlockNumber` method in detail
 ```js
 /**
  * 'getBlockNumber' method works
@@ -96,6 +105,7 @@ As a result, in `render` lifecycle, `this.state.currentBlockNumber` would be pop
 
 For further detail about React's this.setState and rendering mechanism, visit React's official site https://reactjs.org/docs/state-and-lifecycle.html
 
+### 4) Call `getBlockNumber` intervally
 ```js
 /**
  * In 'componentDidMount' lifecycle, call 'getBlockNumber' method intervally.

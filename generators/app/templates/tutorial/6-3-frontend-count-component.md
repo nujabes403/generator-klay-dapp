@@ -1,4 +1,15 @@
 `src/components/Count.js`:  
+
+## `Count` component
+* 1) Full code
+* 2) `Count` component's role
+* 3) How to interact with contract?
+* 4) Interact with contract: `getCount` method
+* 5) Interact with contract: `setPlus` method
+* 6) Transaction life cycle
+
+### 1) Full code
+
 ```js
 import React, { Component } from 'react'
 import cx from 'classnames'
@@ -176,7 +187,7 @@ class Count extends Component {
 export default Count
 
 ```
-
+### 2) `Count` component's role
 `'Count'` component's role is interacting with Count contract deployed on klaytn blockchain.  
 
 In Count.sol contract, we declared several variables and functions like below:  
@@ -188,12 +199,20 @@ In Count.sol contract, we declared several variables and functions like below:
 In Count.js component, we should have a methods to interact with Count.sol contract.  
 For example, we should have a method which retrieves `count` variable's value and `lastParticipant` value, moreover, we should have a function that set `count` variable and `lastParticipant` also by calling `plus`, `minus` functions.  
 
-To do this, we need contract instance to interact with deployed contract. contract instnace can be made by `caver.klay.Contract(ABI, contractAddress)` API of caver-js. (https://docs.klaytn.com/api/toolkit.html#caverklaycontract)
+### 3) How to interact with contract?
+To interact with the contract, we need a contract instance with deployed contract.  
+contract instance can be made through `caver.klay.Contract(ABI, contractAddress)` API of caver-js. (https://docs.klaytn.com/api/toolkit.html#caverklaycontract)
 
-`Contract ABI`(Application Binary Interface) informs how to call contract method to caver, so caver easily call contrcat method, for example, `contractInstance.methods.count().call()`, `contractInstance.methods.plus().send({ ... })`, `contractInstance.methods.minus().send({ ... })`.
+`Contract ABI`(Application Binary Interface) informs how to call contract method to caver, so caver easily call contrcat method,  
+for example)  
+`contractInstance.methods.count().call()`  
+`contractInstance.methods.plus().send({ ... })`  
+`contractInstance.methods.minus().send({ ... })`  
 
-`Contract address` informs where the contract is deployed.
-So to make contract instance, contract ABI and contract address is needed. After compiling & deploying our Count.sol contract, we can see it in `build/contracts/Count.json` file. Luckily, we already made `deployedABI` and `deployedAddress` file in our directory after deploying our contract. It contains ABI of our Count contract and deployed contract address. And thanks to webpack's config, we can access it as variable.(`DEPLOYED_ADDRESS`, `DEPLOYED_ABI`)
+`Contract address` informs where the contract is deployed.  
+So to make a contract instance, contract ABI and contract address is needed. After compiling & deploying our Count.sol contract, we can see it in `build/contracts/Count.json` file.  
+Luckily, we already made `deployedABI` and `deployedAddress` file in our directory after deploying our contract. It contains ABI of our Count contract and deployed contract address.  
+And thanks to webpack's configuration, we can access it as variable.(`DEPLOYED_ADDRESS`, `DEPLOYED_ABI`)
 
 For example)  
 Accessing `DEPLOYED_ADDRESS` returns deployed Address.  
@@ -215,6 +234,7 @@ constructor() {
 
 `this.countContract = new cav.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS)` make a contract instance to interact with deployed `Count` contract, by providing `DEPLOYED_ABI` and `DEPLOYED_ADDRESS` to `cav.klay.Contract` API. and this contract instance is stored to `this.countContract`.  
 
+### 4) Interact with contract: `getCount` method
 ```js
 getCount = async () => {
   // ** 2. Call contract method (CALL) **
@@ -233,7 +253,7 @@ getCount = async () => {
 }
 ```
 
-Since we have contract instance, we can call contract method now. out contract instnace has property, `methods`.  
+Since we have contract instance, we can call contract method now. out contract instance has property, `methods`.  
 It contains functions declared on deployed address, for example, `count`, `lastParticipant`, `plus`, `minus`.  
 
 In above code, `getCount` function is declared as `async` function. Since contract function call returns promise value, it is useful to declare function as `async`.
@@ -256,6 +276,7 @@ componentWillUnmount() {
 We want to fetch `count` variable per 1 second, it could be achieved by `setInterval` and `clearInterval`.  
 It is similar pattern to `BlockNumber.js`'s `getBlockNumber` function which calls `caver.klay.getBlockNumber()` intervally.
 
+### 5) Interact with contract: `setPlus` method
 ```js
 setPlus = () => {
   const walletInstance = cav.klay.accounts.wallet && cav.klay.accounts.wallet[0]
@@ -300,10 +321,11 @@ setPlus = () => {
 ```
 
 `'setPlus'` function is most important part in Count component. It interacts with contract by calling contract function `plus`. Since this function is also contract method, it is contained in `this.counterContract.methods`.  
-However, unlike `count` and `lastParticipant` function read data from klaytn blockchain, this `plus` function __writes data__ to klaytn blockchain.  
-Just reading data is free, however writing data has cost for computation & storage. This cost is called `'gas'`. This kind of process is called `'Sending a transaction'`.  
+However, unlike `count` and `lastParticipant` function reads data from klaytn blockchain, this `plus` function __writes data__ to klaytn blockchain.  
+Just reading data is free, however writing data has cost for computation & storage. This cost is called `'gas'` and this kind of process is called `'Sending a transaction'`.  
 You can easily think `'transaction'` as `writing data to blockchain.` and it costs `'gas'` for computation and storing data.  
-It is the reason why for sending a transaction `from:` property is needed to inform klaytn node who will send a transaction(who will pay for this transaction.) and `gas:` property for how much cost will you endure for sending a transaction.  
+
+By this reason, Sending a transaction needs `from:` property to inform klaytn node who will send a transaction(who will pay for this transaction) and `gas:` property for how much cost will you endure for sending a transaction.
 
 ```js
 this.countContract.methods.plus().send({
@@ -311,8 +333,16 @@ this.countContract.methods.plus().send({
   gas: '200000',
 })
 ```
-So instead `.call()` we used before for calling `count` function, use `.send({ from: ..., gas: ... })`.
 
+So instead `.call()` we used before for calling `count` function, use like below:
+```js
+.send({
+  from: ...,
+  gas: ...
+})
+```
+
+### 6) Transaction life cycle
 ```js
 .once('transactionHash', (txHash) => {
   console.log(`
@@ -335,7 +365,7 @@ So instead `.call()` we used before for calling `count` function, use `.send({ f
 
 After sending transaction, you can hook into transaction life cycle. (`transactionHash`, `receipt`, `error`).  
 In `transactionHash` life cycle, you can get transaction hash before sending actual transaction.  
-In `receipt` life cycle, you can get transaction receipt. It means you transaction got into the block. you can check exact block number which your transaction goes into. by `receipt.blockNumber`.  
+In `receipt` life cycle, you can get transaction receipt. It means you transaction got into the block.   you can check exact block number which your transaction goes into. by `receipt.blockNumber`.  
 In `error` life cycle is triggered when error occurred for sending a transaction.
 
 cf) `settingDirection` is used for showing loading indicator(gif), if transaction have been get into the block, you don't need to show loading indicator. So set `settingDirection` value to `null`.
@@ -352,5 +382,36 @@ cf) `settingDirection` is used for showing loading indicator(gif), if transactio
 ```
 
 You can call this function by clicking + button.  
+
+To recap, after clicking + button,  
+1\. you will send a transaction which calls contract method `plus`.  
+2\. Just after sending a transaction, you will receive transaction hash in `transactionHash` life cycle.  
+3-a\. After your transaction put into block of klaytn blockchain, you will receive transaction receipt in `receipt` life cycle. (If you received transaction receipt, you can guarantee that your transaction got into block.)  
+3-b\. If there were error for sending a transaction, you will receive error in `error` life cycle. And `receipt` life cycle will never be called.
+
+Full code for sending a transaction calling `plus` contract method is below:
+```js
+this.countContract.methods.plus().send({
+  from: walletInstance.address,
+  gas: '200000',
+})
+  .once('transactionHash', (txHash) => {
+    console.log(`
+      Sending a transaction... (Call contract's function 'plus')
+      txHash: ${txHash}
+      `
+    )
+  })
+  .once('receipt', (receipt) => {
+    console.log(`
+      Received receipt! It means your transaction calling plus function is in klaytn block(#${receipt.blockNumber})
+    `, receipt)
+    this.setState({ settingDirection: null })
+  })
+  .once('error', (error) => {
+    alert(error.message)
+    this.setState({ settingDirection: null })
+  })
+```
 
 [Next: Deploy contract](7-deploy-contract.md)

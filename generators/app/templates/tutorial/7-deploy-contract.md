@@ -1,5 +1,11 @@
 ## G. Deploy your smart contract code
-1) truffle configuration  
+
+* 1) truffle congiruation
+* 2) Deploy setup (What contract do you want to deploy?)  
+* 3) Deploy
+
+
+### 1) truffle configuration  
 `truffle.js`:
 
 `truffle.js` file is the place you can describe "How to deploy your contract code". You can congifure below items through truffle.js
@@ -102,7 +108,7 @@ Like above, if you deploy your contract with unlocked account on klaytn node,
 You don't need to set `provider` option.
 
 
-2) Deploy setup (What contract do you want to deploy?)  
+### 2) Deploy setup (What contract do you want to deploy?)  
 `migrations/2_deploy_contracts.js`:  
 
 ```js
@@ -144,7 +150,7 @@ Through this additional logic, we can save our deployed contract's address and A
 
 For further information about `artifacts.`, try visit truffle document site, https://truffleframework.com/docs/truffle/getting-started/running-migrations#artifacts-require-
 
-3) Deploy  
+### 3) Deploy  
 You need KLAY for deploying contract. There are 2 different methods to receive testnet KLAY.
 
 * a. Through klaytn wallet  

@@ -1,5 +1,12 @@
 ## F. Frontend code overview
-`src/index.js`:  
+
+* 1) `src/index.js` - index point of our app
+* 2) `public/index.html` - index.html
+* 3) `src/routes.js` - route definition
+* 4) `src/App.js` - Root component of our app
+* 5) `src/klaytn/caver.js` - Make a connection with klaytn node
+
+### 1) `src/index.js`:  
 ```js
 import ReactDOM from 'react-dom'
 
@@ -27,7 +34,7 @@ if (module.hot) {
 
 It uses 'react-dom' library to render a React element into the DOM in the supplied container('#root') and return a reference to the component. In short, through 'react-dom' our tutorial app's DOM will be populated to `<div id="root"></div>` in `public/index.html` file.
 
-`public/index.html`:
+### 2) `public/index.html`:  
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -57,9 +64,11 @@ It uses 'react-dom' library to render a React element into the DOM in the suppli
 
 ```
 
+`index.html` is HTML file for rendering our tutorial app.
+
 For further information, visit React official site https://reactjs.org/docs/react-dom.html#render
 
-`src/routes.js`:  
+### 3) `src/routes.js`:  
 
 ```js
 import React from 'react'
@@ -85,7 +94,7 @@ By above code, `'Count'` component would be rendered as a children of rootCompon
 For further information, visit React router github https://github.com/ReactTraining/react-router/blob/v3.2.1/docs/API.md
 
 
-`src/App.js`:  
+### 4) `src/App.js`:  
 
 ```js
 import React, { Component } from 'react'
@@ -180,7 +189,7 @@ For further information related `caver.klay.accounts`, visit klaytn docs site ht
 
 cf) `JSON.parse` is needed since `walletInstance` session is stored as JSON string.
 
-`src/klaytn/caver.js`:  
+### 5) `src/klaytn/caver.js`:  
 
 ```js
 /**
@@ -201,7 +210,9 @@ export const cav = new Caver(config.rpcURL)
 export default cav
 ```
 
-caver-js library make a connection with klaytn node. You could connect to specific klaytn node by changing 'rpcURL' value.  
+caver-js library make a connection with klaytn node.  
+After making a connection, you can get current block number from the node, you can call method on smart contract with caver.  
+You could connect to specific klaytn node by changing 'rpcURL' value.  
 If you are running a klaytn full node, you can set rpcURL to your node's URL. for example, `rpcURL: 'http://localhost:8551'`  
 If not, default rpcURL is `'http://aspen.klaytn.com'`.
 
