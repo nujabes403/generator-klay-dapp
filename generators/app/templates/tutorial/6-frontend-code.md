@@ -1,10 +1,10 @@
 ## F. Frontend code overview
 
-* 1) `src/index.js` - index point of our app
-* 2) `public/index.html` - index.html
-* 3) `src/routes.js` - route definition
-* 4) `src/App.js` - Root component of our app
-* 5) `src/klaytn/caver.js` - Make a connection with klaytn node
+1) `src/index.js` - index point of our app  
+2) `public/index.html` - index.html  
+3) `src/routes.js` - route definition  
+4) `src/App.js` - Root component of our app  
+5) `src/klaytn/caver.js` - Make a connection with klaytn node  
 
 ### 1) `src/index.js`:  
 ```js

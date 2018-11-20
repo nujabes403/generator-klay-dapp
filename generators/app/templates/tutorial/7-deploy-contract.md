@@ -1,8 +1,8 @@
 ## G. Deploy your smart contract code
 
-* 1) truffle congiruation
-* 2) Deploy setup (What contract do you want to deploy?)  
-* 3) Deploy
+1) truffle congiruation  
+2) Deploy setup (What contract do you want to deploy?)    
+3) Deploy  
 
 
 ### 1) truffle configuration  

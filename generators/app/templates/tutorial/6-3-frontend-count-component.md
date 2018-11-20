@@ -1,12 +1,12 @@
 `src/components/Count.js`:  
 
 ## `Count` component
-* 1) Full code
-* 2) `Count` component's role
-* 3) How to interact with contract?
-* 4) Interact with contract: `getCount` method
-* 5) Interact with contract: `setPlus` method
-* 6) Transaction life cycle
+1) Full code  
+2) `Count` component's role  
+3) How to interact with contract?  
+4) Interact with contract: `getCount` method  
+5) Interact with contract: `setPlus` method  
+6) Transaction life cycle  
 
 ### 1) Full code
 
@@ -436,6 +436,7 @@ this.countContract.methods.plus().send({
 
 ### How can I check my transaction put into the blockchain?
 
+![check-transaction](https://github.com/nujabes403/generator-klay-dapp/blob/master/images/check-your-transaction.gif?raw=true)
 
 After sending a transaction, you can check your transaction detail in klaytnscope.  
 Check it in `https://scope.klaytn.com/transaction/${txHash}`.

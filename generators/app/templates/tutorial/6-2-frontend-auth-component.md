@@ -1,11 +1,11 @@
 `src/components/Auth.js`:  
 
 ## `Auth` component
-* 1) Background
-* 2) `Auth` component overview
-* 3) `Auth` component feature: User can input private key to login.
-* 4) `Auth` component feature: User can import keystore file and input password to login.
-* 5) `Auth` component feature: User can logout, remove wallet instance information from browser.
+1) Background  
+2) `Auth` component overview  
+3) `Auth` component feature: User can input private key to login.  
+4) `Auth` component feature: User can import keystore file and input password to login.  
+5) `Auth` component feature: User can logout, remove wallet instance information from browser.  
 
 ### 1) Background
 In blockchain based app, we usually interact with contract.  

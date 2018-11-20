@@ -1,10 +1,10 @@
 `src/components/BlockNumber.js`:  
 
 ## `BlockNumber` component
-* 1) Full code
-* 2) BlockNumber component's role
-* 3) `getBlockNumber` method in detail
-* 4) Call `getBlockNumber` intervally
+1) Full code  
+2) BlockNumber component's role  
+3) `getBlockNumber` method in detail  
+4) Call `getBlockNumber` intervally  
 
 
 ### 1) Full code
