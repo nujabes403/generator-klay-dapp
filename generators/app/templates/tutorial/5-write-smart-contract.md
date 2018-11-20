@@ -1,7 +1,7 @@
 ## E. Writing smart contract (Count.sol)
 
 ### 1) Background
-We will make super simple contract called "Count" contract.  
+We will make a super simple contract called "Count" contract.  
 
 a. There would be just one storage variable called `count`.  
 b. User can increase `count` variable by 1 or decrease it by 1. So there would be two functions, `plus` function which increases `count` variable by 1, and `minus` function which decreases `count` variable by 1. That's all!
@@ -54,7 +54,7 @@ contract Count {
 ```
 
 *Things to notice.*  
-To enable user to call a functions freely, function should be declared as a `public` function like below:
+To enable the user to call a functions freely, function should be declared as a `public` function like below:
 
 ```solidity
 function plus() public { … }
@@ -107,9 +107,17 @@ contract Count {
 ```
 
 *Things to notice.*  
-To get transaction sender's address we can use `msg.sender` variable.
+1) `public`
+If you declare variable or function as `public`,  you can access this variable outer blockchain,  
+for example, you can access this variable or function in your frontend application.  
+You will see how to interact with contract public method, variables soon. (6-3 frontend-count-component.md)
+
+2) `msg.sender`  
+`msg.sender` is the person who currently connecting with the contract.  
+To get the address of transaction sender we can use `msg.sender` variable.
 ```solidity
 lastParticipant = msg.sender;
 ```
+This line will make `lastParticipant`'s value to `msg.sender`
 
 [Next: Frontend code overview](6-frontend-code.md)

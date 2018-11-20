@@ -1,6 +1,6 @@
 ## G. Deploy your smart contract code
 
-1) truffle congiruation  
+1) truffle configuration  
 2) Deploy setup (What contract do you want to deploy?)    
 3) Deploy  
 
@@ -10,7 +10,7 @@
 
 `truffle.js` file is the place you can describe "How to deploy your contract code". You can congifure below items through truffle.js
 
-__1) Who will deploy the contract?  
+__1) Who will deploy the contract(Which klaytn account will deploy the contract)?  
 2) Which network will you deploy on?  
 3) How many gas will you pay to deploy the contract?__
 
@@ -43,6 +43,10 @@ const PrivateKeyConnector = require('connect-privkey-to-provider')
 const NETWORK_ID = '1000'
 const GASLIMIT = '20000000'
 
+/**
+ * We extracted `URL`, `PRIVATE_KEY` as const variable to set value easily.
+ * Set your private key and klaytn node's URL in here.
+ */
 const URL = `http://aspen.klaytn.com`
 const PRIVATE_KEY = '0x48f5a77dbf13b436ae0325ae91efd084430d2da1123a8c273d7df5009248f90c'
 
@@ -142,13 +146,13 @@ module.exports = function (deployer) {
 ```
 
 You can specify which contract code will you deploy in your `contracts/` directory.  
-At first, you should import your contract file (`Count.sol`) in this file through `const Count = artifats.require('./Count.sol')`  
+At first, you should import your contract file (`Count.sol`) in this file through `const Count = artifacts.require('./Count.sol')`  
 And use `deployer` to deploy your contract, through `deployer.deploy(Count)`. Actually, it is enough to deploy your contract.  
 However, if you want to add some logic after deploying your contract, use `.then()`.  
 We want to store deployed contracts' ABI and address.  `fs` node.js module make it possible to save it as a file. (`fs.writeFile(filename, content, callback)`)  
 Through this additional logic, we can save our deployed contract's address and ABI to our directory (`deployedABI` and `deployedAddress`).  
 
-For further information about `artifacts.`, try visit truffle document site, https://truffleframework.com/docs/truffle/getting-started/running-migrations#artifacts-require-
+For further information about `artifacts.`, visit truffle document site, https://truffleframework.com/docs/truffle/getting-started/running-migrations#artifacts-require-
 
 ### 3) Deploy  
 You need KLAY for deploying contract. There are 2 different methods to receive testnet KLAY.
