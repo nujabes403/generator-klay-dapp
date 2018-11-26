@@ -32,7 +32,8 @@ By this reason, to write data to contract, you should have klaytn account which 
 `'Auth.js'` component is longest code in our tutorial app, so we will break codes into step by step.  
 
 It looks like below.  
-![auth-component](https://github.com/nujabes403/generator-klay-dapp/blob/master/images/auth-component.png?raw=true)
+![auth-component](../../../../images/tutorial-auth-component.png)
+
 
 This component features are like below:  
 1) User can input private key to login.  

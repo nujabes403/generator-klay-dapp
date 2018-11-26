@@ -15,7 +15,7 @@
 
 ## A. Introduction
 
-![intro](https://github.com/nujabes403/generator-klay-dapp/blob/master/images/1intro.gif?raw=true)
+![intro](../../../../images/tutorial-1intro.gif)
 
 This is the introduction of our tutorial app.  
 We will make an app with basic smart contract(`Count`).  

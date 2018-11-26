@@ -168,7 +168,8 @@ If you already have your klaytn account(address), type command below in terminal
 example)  
 `$ curl -X GET "https://apiwallet.klaytn.com/faucet?address=0x32421b7Bfe2F81ca6708b72eDc5b2f1Ce9f80a79"`
 
-![deploy](https://github.com/nujabes403/generator-klay-dapp/blob/master/images/3deploy.gif?raw=true)  
+![deploy](../../../../images/tutorial-3deploy.gif)  
+
 type `$ truffle deploy --network klaytn`.  
 It will deploy your contract according to `truffle.js` and `migrations/2_deploy_contracts.js` configuration.  
 

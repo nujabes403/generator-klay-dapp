@@ -436,7 +436,7 @@ this.countContract.methods.plus().send({
 
 ### How can I check my transaction put into the blockchain?
 
-![check-transaction](https://github.com/nujabes403/generator-klay-dapp/blob/master/images/check-your-transaction.gif?raw=true)
+![check-transaction](../../../../images/tutorial-check-your-transaction.gif)
 
 After sending a transaction, you can check your transaction detail in klaytnscope.  
 Check it in `https://scope.klaytn.com/transaction/${txHash}`.

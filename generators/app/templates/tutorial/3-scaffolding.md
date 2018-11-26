@@ -1,5 +1,5 @@
 ## C. Scaffolding installation
-![install](https://github.com/nujabes403/generator-klay-dapp/blob/master/images/2install.gif?raw=true)
+![install](../../../../images/tutorial-2install.gif)
 
 ### 1) Install yeoman generator  
 yeoman generator is generic scaffolding system allowing the creation of any kind of app.  
