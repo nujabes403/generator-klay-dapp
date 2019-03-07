@@ -20,7 +20,7 @@
   "author": "nujabes403",
   "license": "GPL-3.0",
   "dependencies": {
-    "caver-js": "0.0.1-f",
+    "caver-js": "0.0.2-k",
     "classnames": "^2.2.5",
     "connect-privkey-to-provider": "0.0.1",
     "dotenv": "^6.0.0",
