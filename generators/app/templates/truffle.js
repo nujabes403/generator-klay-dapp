@@ -47,13 +47,13 @@ const PrivateKeyConnector = require('connect-privkey-to-provider')
  * truffle network variables
  * for deploying contract to klaytn network.
  */
-const NETWORK_ID = '1000'
+const NETWORK_ID = '1001'
 const GASLIMIT = '20000000'
 
 /**
  * parameters for DEPLOY METHOD 1(By private key)
  */
-const URL = `http://aspen.klaytn.com`
+const URL = `https://api.baobab.klaytn.net:8651`
 const PRIVATE_KEY = '0x48f5a77dbf13b436ae0325ae91efd084430d2da1123a8c273d7df5009248f90c'
 
 /**
