@@ -22,7 +22,7 @@
   "dependencies": {
     "caver-js": "0.0.2-r",
     "classnames": "^2.2.5",
-    "connect-privkey-to-provider": "0.0.2",
+    "connect-privkey-to-provider": "0.0.3",
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
     "react": "^16.3.2",
