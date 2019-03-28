@@ -212,7 +212,7 @@ const Caver = require('caver-js')
  */
 const HOST = 'localhost'
 const PORT = '8551'
-const NETWORK_ID = '1000'
+const NETWORK_ID = '1001'
 const GASLIMIT = 20000000
 const GASPRICE = null
 

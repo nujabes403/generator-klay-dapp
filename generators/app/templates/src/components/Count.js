@@ -56,7 +56,6 @@ class Count extends Component {
     // ex:) this.countContract.methods.plus().send({
     //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
     //   gas: '200000',
-    //   chainId: '1000', // default `chainId` is '1000'.
     // })
     this.countContract.methods.plus().send({
       from: walletInstance.address,
@@ -101,7 +100,6 @@ class Count extends Component {
     // ex:) this.countContract.methods.minus().send({
     //   from: '0x952A8dD075fdc0876d48fC26a389b53331C34585', // PUT YOUR ADDRESS
     //   gas: '200000',
-    //   chainId: '1000', // default `chainId` is '1000'.
     // })
 
     // It returns event emitter, so after sending, you can listen on event.
